@@ -7,7 +7,9 @@ This project provides a simple MCP (Model Context Protocol) server for the Gemin
 ## What is MCP?
 
 **MCP** (Model Context Protocol) allows the Gemini CLI to securely and reliably interact with local or remote tools.  
+
 The `rainsoon_mcp.py` script runs as a local MCP server, making its `check_for_rain` function available as a callable tool inside Gemini CLI.  
+
 With the addition of an **MCP prompt**, Gemini CLI now exposes `/rainsoon` as a native slash command with arguments.
 
 ---
