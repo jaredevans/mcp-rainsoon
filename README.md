@@ -105,7 +105,39 @@ Gemini CLI can also auto-invoke the tool based on your prompt:
 ```
 Is it going to rain soon?
 ```
+
 or
+
 ```
 Will it rain soon for IP 134.231.2.45?
+```
+
+Example output in Gemini cli:
+
+```
+╭────────────────────────╮
+│  > will it rain soon?  │
+╰────────────────────────╯
+
+ ╭─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+ │ ✔  check_for_rain (rainsoon MCP Server) {}                                                                                                      │
+ │                                                                                                                                                 │
+ │    {                                                                                                                                            │
+ │      "ip": "96.231.154.148",                                                                                                                    │
+ │      "location": "Wheaton",                                                                                                                     │
+ │      "lat": 39.0348,                                                                                                                            │
+ │      "lng": -77.0533,                                                                                                                           │
+ │      "rain": false,                                                                                                                             │
+ │      "precipitation_chance": 0,                                                                                                                 │
+ │      "threshold": 20,                                                                                                                           │
+ │      "message": "No, 0% chance of rain soon in Wheaton.",                                                                                       │
+ │      "hour_sample": [                                                                                                                           │
+ │        "2025-08-12T00:00",                                                                                                                      │
+ │        "2025-08-12T01:00",                                                                                                                      │
+ │        "2025-08-12T02:00"                                                                                                                       │
+ │      ]                                                                                                                                          │
+ │    }                                                                                                                                            │
+ ╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+✦ No, 0% chance of rain soon in Wheaton.
+
 ```
