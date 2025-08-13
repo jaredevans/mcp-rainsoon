@@ -29,9 +29,9 @@ With the addition of an **MCP prompt**, Gemini CLI now exposes `/rainsoon` as a 
 
 ---
 
-## New `/rainsoon` Command in Gemini CLI
+## `/rainsoon` Command in Gemini CLI
 
-The MCP server now includes a **prompt definition** that Gemini CLI turns into a slash command:
+The MCP server includes a **prompt definition** that Gemini CLI turns into a slash command:
 
 **Usage:**
 
