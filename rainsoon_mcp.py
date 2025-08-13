@@ -137,8 +137,8 @@ def rainsoon(ip: str = "", threshold: int = 20) -> str:
     """
     Prompt that the Gemini CLI exposes as /rainsoon with named args:
       /rainsoon
-      /rainsoon --ip "8.8.8.8"
-      /rainsoon --ip "8.8.8.8" --threshold 35
+      /rainsoon --ip "209.133.210.37"
+      /rainsoon --ip "209.133.210.37" --threshold 35
     """
     # Keep instructions minimal so the model reliably calls the tool.
     return f"""
