@@ -1,14 +1,14 @@
 # Rainsoon MCP
 
-This project provides a simple MCP (Model Context Protocol) server for the Gemini CLI that exposes a single tool: **`check_for_rain`**.
-This tool lets you check the near-term probability of rain for a given IP address or your current location.
+This project provides a simple MCP (Model Context Protocol) server for the Gemini CLI that exposes a single tool: **`check_for_rain`** and also a **`/rainsoon`** slash command for quick access.
 
 ---
 
 ## What is MCP?
 
-**MCP** (Model Context Protocol) is a system that allows the Gemini CLI to securely and reliably interact with local or remote tools.
-The `rainsoon_mcp.py` script runs as a local MCP server, making its `check_for_rain` function available as a callable tool inside the Gemini CLI.
+**MCP** (Model Context Protocol) allows the Gemini CLI to securely and reliably interact with local or remote tools.  
+The `rainsoon_mcp.py` script runs as a local MCP server, making its `check_for_rain` function available as a callable tool inside Gemini CLI.  
+With the addition of an **MCP prompt**, Gemini CLI now exposes `/rainsoon` as a native slash command with arguments.
 
 ---
 
@@ -24,6 +24,48 @@ The `rainsoon_mcp.py` script runs as a local MCP server, making its `check_for_r
   - Rain probability
   - Whether the probability exceeds the threshold
   - A human-readable message
+
+---
+
+## New `/rainsoon` Command in Gemini CLI
+
+The MCP server now includes a **prompt definition** that Gemini CLI turns into a slash command:
+
+**Usage:**
+
+```
+/rainsoon                      # auto-detect IP, default threshold=20%
+/rainsoon --ip="134.231.2.45"       # check for a specific IP
+/rainsoon --ip="134.231.2.45" --threshold=35
+```
+
+The output is the **raw JSON** from `check_for_rain`.
+
+Example:
+
+```
+╭───────────────╮
+│  > /rainsoon  │
+╰───────────────╯
+
+✔  check_for_rain (rainsoon MCP Server) {"threshold":20,"ip":""}
+
+{
+  "ip": "96.231.151.145",
+  "location": "Wheaton",
+  "lat": 39.0358,
+  "lng": -77.0523,
+  "rain": false,
+  "precipitation_chance": 0,
+  "threshold": 20,
+  "message": "No, 0% chance of rain soon in Wheaton.",
+  "hour_sample": [
+    "2025-08-12T00:00",
+    "2025-08-12T01:00",
+    "2025-08-12T02:00"
+  ]
+}
+```
 
 ---
 
@@ -48,17 +90,15 @@ The `rainsoon_mcp.py` script is a self-contained MCP server. Its workflow:
 
 ---
 
-## Configuration
+## Installation
 
-**Install python packages:**
+**Install Python packages:**
 
 ```
 pip install "mcp[cli]" requests geocoder
 ```
 
-Gemini CLI loads MCP server settings from `~/.gemini/settings.json`.
-
-Example configuration:
+**Gemini CLI configuration** (`~/.gemini/settings.json`):
 
 ```
 {
@@ -76,60 +116,32 @@ Example configuration:
 
 **Fields:**
 
-- **`mcpServers`** — contains all your MCP server configs.
-- **`rainsoon`** — the name of this MCP server (used in `/mcp call` commands).
-- **`command`** — absolute path to the Python executable inside your virtual environment.
-- **`args`**:
-  - `-u` → unbuffered output (important for MCP stdio communication).
-  - Path to `rainsoon_mcp.py` → must be the absolute path.
-- **`timeout`** — time (ms) Gemini CLI will wait for a server response.
+- `mcpServers` — all MCP server configs.
+- `rainsoon` — server name (used in `/mcp call` commands).
+- `command` — absolute path to Python in your venv.
+- `args` — `-u` for unbuffered output, then absolute path to the script.
+- `timeout` — in ms.
 
-⚠ **Important:** Update paths to match your local setup.
+⚠ Update the paths for your environment.
 
 ---
 
-## How to Use It
+## How to Use
 
-Once `settings.json` is set up and Gemini CLI is running:
-
-### **Natural Language**
-Gemini CLI can also auto-invoke the tool based on your prompt:
-```
-Is it going to rain soon?
-```
-
-or
+### Natural Language
+Gemini CLI can auto-call the tool when you type:
 
 ```
+Will it rain soon?
 Will it rain soon for IP 134.231.2.45?
 ```
 
-Example output in Gemini cli:
+### `/rainsoon` Command
 
 ```
-╭────────────────────────╮
-│  > will it rain soon?  │
-╰────────────────────────╯
-
- ╭─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
- │ ✔  check_for_rain (rainsoon MCP Server) {}                                                                                                      │
- │                                                                                                                                                 │
- │    {                                                                                                                                            │
- │      "ip": "96.231.154.148",                                                                                                                    │
- │      "location": "Wheaton",                                                                                                                     │
- │      "lat": 39.0348,                                                                                                                            │
- │      "lng": -77.0533,                                                                                                                           │
- │      "rain": false,                                                                                                                             │
- │      "precipitation_chance": 0,                                                                                                                 │
- │      "threshold": 20,                                                                                                                           │
- │      "message": "No, 0% chance of rain soon in Wheaton.",                                                                                       │
- │      "hour_sample": [                                                                                                                           │
- │        "2025-08-12T00:00",                                                                                                                      │
- │        "2025-08-12T01:00",                                                                                                                      │
- │        "2025-08-12T02:00"                                                                                                                       │
- │      ]                                                                                                                                          │
- │    }                                                                                                                                            │
- ╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
-✦ No, 0% chance of rain soon in Wheaton.
-
+/rainsoon
+/rainsoon --ip="134.231.2.45"
+/rainsoon --ip="134.231.2.45" --threshold=35
 ```
+
+---
