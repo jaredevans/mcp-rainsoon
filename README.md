@@ -93,7 +93,7 @@ Once `settings.json` is set up and Gemini CLI is running:
   ```
 - Check a specific IP:
   ```
-  /mcp call rainsoon check_for_rain '{"ip":"8.8.8.8"}'
+  /mcp call rainsoon check_for_rain '{"ip":"134.231.2.45"}'
   ```
 - Change rain threshold:
   ```
