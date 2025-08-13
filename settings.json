@@ -1,0 +1,12 @@
+{
+  "selectedAuthType": "gemini-api-key",
+  "theme": "Default",
+  "mcpServers": {
+    "rainsoon": {
+      "command": "/path_to/rainsoon/.venv/bin/python3",
+      "args": ["-u", "/path_to/rainsoon/rainsoon_mcp.py"],
+      "timeout": 15000
+    }
+  }
+}
+
