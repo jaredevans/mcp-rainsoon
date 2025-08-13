@@ -8,6 +8,10 @@ Tools:
     • If `ip` is empty, auto-detects the public IP.
     • Returns a compact JSON dict including location, chance, and message.
 
+Prompt (auto slash command in Gemini CLI):
+  - /rainsoon [--ip "x.x.x.x"] [--threshold 20]
+    • Calls the tool with the given args and returns ONLY the tool's raw JSON.
+
 Deps (install in your venv):
   pip install "mcp[cli]" requests geocoder
 """
@@ -125,6 +129,22 @@ def check_for_rain(ip: str = "", threshold: int = 20) -> dict:
         return {"error": f"Failed to fetch weather data: {e}"}
     except Exception as e:
         return {"error": str(e)}
+
+
+# ---------- MCP Prompt -> becomes /rainsoon in Gemini CLI ----------
+@mcp.prompt()
+def rainsoon(ip: str = "", threshold: int = 20) -> str:
+    """
+    Prompt that the Gemini CLI exposes as /rainsoon with named args:
+      /rainsoon
+      /rainsoon --ip "8.8.8.8"
+      /rainsoon --ip "8.8.8.8" --threshold 35
+    """
+    # Keep instructions minimal so the model reliably calls the tool.
+    return f"""
+Call the tool `check_for_rain` with ip="{ip}" and threshold={int(threshold)}.
+Return ONLY the tool's raw JSON (no commentary).
+"""
 
 
 if __name__ == "__main__":
