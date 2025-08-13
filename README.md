@@ -92,21 +92,7 @@ Example configuration:
 
 Once `settings.json` is set up and Gemini CLI is running:
 
-### 1. **Direct Tool Call**
-- Auto-detect public IP:
-  ```
-  /mcp call rainsoon check_for_rain '{}'
-  ```
-- Check a specific IP:
-  ```
-  /mcp call rainsoon check_for_rain '{"ip":"134.231.2.45"}'
-  ```
-- Change rain threshold:
-  ```
-  /mcp call rainsoon check_for_rain '{"threshold":10}'
-  ```
-
-### 2. **Natural Language**
+### **Natural Language**
 Gemini CLI can also auto-invoke the tool based on your prompt:
 ```
 Is it going to rain soon?
