@@ -50,7 +50,13 @@ The `rainsoon_mcp.py` script is a self-contained MCP server. Its workflow:
 
 ## Configuration
 
-Gemini CLI loads MCP server settings from `~/.gemini/settings.json` (or a project-specific `.gemini/settings.json`).
+**Install python packages:**
+
+```
+pip install "mcp[cli]" requests geocoder
+```
+
+Gemini CLI loads MCP server settings from `~/.gemini/settings.json`.
 
 Example configuration:
 
