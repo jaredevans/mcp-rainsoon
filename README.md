@@ -136,6 +136,7 @@ Gemini CLI can auto-call the tool when you type:
 ```
 Will it rain soon?
 Will it rain soon for IP 134.231.2.45?
+Will I be wet soon?
 ```
 
 ### `/rainsoon` Command
